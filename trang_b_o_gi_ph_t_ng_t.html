@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(thay tên sản phẩm) - (thay mã sản phẩm) | Phụ Tùng Ô Tô Chính Hãng (có thể thay tên cty vd Huy Thành) </title>
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        a {
+            text-decoration: none;
+            color: #0066cc;
+            transition: all 0.2s ease;
+        }
+        a:hover {
+            color: #d9534f;
+        }
+
+        /* --- CONTAINER --- */
+        .wrapper {
+            max-width: 1100px;
+            margin: 10px auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+
+        /* --- HEADER --- */
+        .top-bar {
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #e7e7e7;
+            padding: 8px 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 2px solid #8b0000;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-box {
+            background-color: #c82333;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            padding: 5px 15px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+        .search-box input {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-right: none;
+            width: 250px;
+            outline: none;
+        }
+        .search-box button {
+            background: #333;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 6px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-box button:hover {
+            background: #c82333;
+            border-color: #c82333;
+        }
+
+        /* --- NAVIGATION MENU --- */
+        .nav-menu {
+            background: #efefef;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            list-style: none;
+            padding: 0 10px;
+        }
+        .nav-menu li a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .nav-menu li a:hover {
+            background: #8b0000;
+            color: #fff;
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .main-content {
+            display: flex;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        /* --- SIDEBAR LEFT --- */
+        .sidebar {
+            width: 220px;
+            flex-shrink: 0;
+        }
+        .sidebar-title {
+            background: #222;
+            color: #fff;
+            font-weight: bold;
+            padding: 8px 12px;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .sidebar-menu {
+            list-style: none;
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+        .sidebar-menu li {
+            border-bottom: 1px dashed #eee;
+        }
+        .sidebar-menu li a {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 10px;
+            color: #555;
+            font-size: 12px;
+        }
+        .sidebar-menu li a:hover {
+            background: #f9f9f9;
+            color: #c82333;
+            padding-left: 14px;
+        }
+        .sidebar-menu li a::after {
+            content: "»";
+            color: #999;
+        }
+
+        /* --- PRODUCT DETAIL AREA --- */
+        .product-area {
+            flex-grow: 1;
+        }
+        .product-title-bar {
+            background: #222;
+            color: #fff;
+            font-weight: bold;
+            padding: 8px 12px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border-radius: 2px;
+        }
+
+        .product-main-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Product Gallery */
+        .product-gallery {
+            width: 320px;
+            flex-shrink: 0;
+        }
+        .main-image {
+            width: 100%;
+            height: 240px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: #fff;
+        }
+        .thumb-list {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .thumb-item {
+            width: 65px;
+            height: 50px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            cursor: pointer;
+            object-fit: cover;
+            transition: border-color 0.2s;
+        }
+        .thumb-item:hover, .thumb-item.active {
+            border-color: #c82333;
+        }
+
+        /* Product Details Specs */
+        .product-specs {
+            flex-grow: 1;
+        }
+        .status-tag {
+            display: inline-block;
+            background: #d9534f;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .spec-row {
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .spec-label {
+            color: #666;
+            width: 110px;
+            display: inline-block;
+        }
+        .spec-value {
+            font-weight: bold;
+            color: #333;
+        }
+        .price-value {
+            color: #d9534f;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .btn-action {
+            display: inline-block;
+            background: #c82333;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-action:hover {
+            background: #a71d2a;
+        }
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        /* Tabs & Description */
+        .tab-header {
+            display: flex;
+            border-bottom: 2px solid #333;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        .tab-btn {
+            padding: 8px 15px;
+            background: #eee;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            margin-right: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #555;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover, .tab-btn.active {
+            background: #333;
+            color: #fff;
+            border-color: #333;
+        }
+        .description-box {
+            background: #fff;
+            padding: 10px 5px;
+            line-height: 1.6;
+        }
+        .description-box h4 {
+            margin-bottom: 8px;
+            color: #222;
+        }
+        .description-box ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #222;
+            color: #aaa;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            border-top: 3px solid #c82333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- TOP INFO BAR -->
+    <div class="top-bar">
+        Chào mừng quý khách đến với Hệ thống Phụ tùng Ô tô Chính hãng | Hotline: <strong>0915 468 000</strong>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <div class="main-header">
+        <div class="logo-area">
+            <div class="logo-box">H&C</div>
+            <div>
+                <div style="font-weight: bold; font-size: 16px; color: #8b0000;">AUTO PARTS</div>
+                <div style="font-size: 11px; color: #666;">Phụ tùng ô tô uy tín hàng đầu</div>
+            </div>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Nhập tên sản phẩm hoặc mã phụ tùng...">
+            <button onclick="fakeAction('Tìm kiếm')">Tìm kiếm</button>
+        </div>
+    </div>
+
+    <!-- NAVIGATION MENU -->
+    <ul class="nav-menu">
+        <li><a href="#" onclick="fakeAction('Trang chủ')">Trang chủ</a></li>
+        <li><a href="#" onclick="fakeAction('Giới thiệu')">Giới thiệu</a></li>
+        <li><a href="#" onclick="fakeAction('Sản phẩm')">Sản phẩm</a></li>
+        <li><a href="#" onclick="fakeAction('Tra mã phụ tùng')">Tra mã phụ tùng</a></li>
+        <li><a href="#" onclick="fakeAction('Tin tức')">Tin tức</a></li>
+        <li><a href="#" onclick="fakeAction('Liên hệ')">Liên hệ</a></li>
+    </ul>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- SIDEBAR LEFT -->
+        <div class="sidebar">
+            <div class="sidebar-title">Phụ tùng theo hãng</div>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="fakeAction('TOYOTA')">TOYOTA</a></li>
+                <li><a href="#" onclick="fakeAction('LEXUS')">LEXUS</a></li>
+                <li><a href="#" onclick="fakeAction('HYUNDAI')">HYUNDAI</a></li>
+                <li><a href="#" onclick="fakeAction('KIA')">KIA</a></li>
+                <li><a href="#" onclick="fakeAction('GM - CHEVROLET')">GM - CHEVROLET</a></li>
+                <li><a href="#" onclick="fakeAction('NISSAN')">NISSAN</a></li>
+                <li><a href="#" onclick="fakeAction('ISUZU')">ISUZU</a></li>
+                <li><a href="#" onclick="fakeAction('MITSUBISHI')">MITSUBISHI</a></li>
+                <li><a href="#" onclick="fakeAction('HONDA')">HONDA</a></li>
+                <li><a href="#" onclick="fakeAction('FORD')">FORD</a></li>
+                <li><a href="#" onclick="fakeAction('MERCEDES')">MERCEDES</a></li>
+                <li><a href="#" onclick="fakeAction('BMW')">BMW</a></li>
+            </ul>
+        </div>
+
+        <!-- PRODUCT DETAIL -->
+        <div class="product-area">
+            <!-- PRODUCT TITLE BAR (Dễ dàng thay đổi tên sản phẩm ở đây) -->
+            <div class="product-title-bar">
+                Két nước Sienna 2011 (Két làm mát) - 160410P270
+            </div>
+
+            <div class="product-main-info">
+                <!-- GALLERY IMAGE -->
+                <div class="product-gallery">
+                    <!-- Ảnh chính: Thay tên anh sp.jpg thành tên ảnh bạn tạo ảnh của bạn -->
+                   <img id="current-img" class="main-image" src="anh sp.jpg" alt="Ảnh sản phẩm">
+                    
+                    <!-- Danh sách ảnh nhỏ bên dưới -->
+                    <div class="thumb-list">
+                        <img class="thumb-item active" src="https://via.placeholder.com/400x300/e0e0e0/333333?text=Ket+Nuoc+Sienna+2011" onclick="changeImage(this)">
+                        <img class="thumb-item" src="https://via.placeholder.com/400x300/cccccc/333333?text=Mat+Sau" onclick="changeImage(this)">
+                        <img class="thumb-item" src="https://via.placeholder.com/400x300/b0b0b0/333333?text=Chi+Tiet+Ma" onclick="changeImage(this)">
+                    </div>
+                </div>
+
+                <!-- SPECS INFO (Dễ dàng sửa giá và thông tin ở đây) -->
+                <div class="product-specs">
+                    <div class="status-tag">Đặt hàng</div>
+                    
+                    <div class="spec-row">
+                        <span class="spec-label">Mã sản phẩm:</span>
+                        <span class="spec-value" style="color: #c82333;">160410P270</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Hãng xe:</span>
+                        <span class="spec-value">TOYOTA</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Model xe:</span>
+                        <span class="spec-value">SIENNA</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Giá bán tham khảo:</span>
+                        <span class="price-value">14,000,000 VNĐ</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Ngày cập nhật:</span>
+                        <span class="spec-value" style="font-weight: normal; color: #777;">10/09/2026</span>
+                    </div>
+
+                    <button class="btn-action" onclick="fakeAction('Mua hàng / Báo giá')">Mua hàng</button>
+                </div>
+            </div>
+
+            <!-- DESCRIPTION TABS -->
+            <div class="tab-header">
+                <button class="tab-btn active" onclick="fakeAction('Mô tả sản phẩm')">Mô tả sản phẩm</button>
+                <button class="tab-btn" onclick="fakeAction('Hướng dẫn mua hàng')">Hướng dẫn mua hàng</button>
+                <button class="tab-btn" onclick="fakeAction('Liên hệ')">Liên hệ</button>
+            </div>
+
+            <div class="description-box">
+                <p>Mã sản phẩm <strong>160410P270</strong> (hoặc viết theo định dạng của hãng là 16041-0P270) là <strong>két nước làm mát (Radiator Assembly)</strong> chính hãng dành cho các dòng xe của <strong>Toyota</strong> và <strong>Lexus</strong>.</p>
+                <br>
+                <h4>⚙ Thông số & Ứng dụng dòng xe:</h4>
+                <ul>
+                    <li><strong>Loại phụ tùng:</strong> Két nước làm mát động cơ chính hãng.</li>
+                    <li><strong>Các dòng xe tương thích chính:</strong>
+                        <ul>
+                            <li>Toyota Sienna (Đặc biệt là các đời từ 2011 - 2017, động cơ 3.5L V6).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Tình trạng:</strong> Mới 100%, nguyên hộp.</li>
+                    <li><strong>Bảo hành:</strong> 12 tháng theo tiêu chuẩn nhà sản xuất.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        © 2026 Bản quyền thuộc về Auto Parts Store. Tất cả các quyền được bảo lưu.
+    </div>
+</div>
+
+<script>
+    // Hàm xử lý khi bấm nút để không bị chuyển trang hay lỗi 404
+    function fakeAction(itemName) {
+        // Ngăn hành vi nhảy trang mặc định
+        if (event) event.preventDefault();
+        
+        // Thông báo nhẹ nhàng cho người xem
+        alert('Bạn vừa nhấp vào: ' + itemName + '.\nTrang web đang hiển thị ở chế độ xem báo giá tĩnh.');
+    }
+
+    // Hàm chuyển đổi ảnh khi click vào ảnh nhỏ
+    function changeImage(element) {
+        document.getElementById('current-img').src = element.src;
+        let thumbs = document.querySelectorAll('.thumb-item');
+        thumbs.forEach(thumb => thumb.classList.remove('active'));
+        element.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
